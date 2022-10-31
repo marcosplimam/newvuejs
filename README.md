@@ -1,11 +1,4 @@
-# About
+Uma simples To-Do list com funções de:
 
-Simple VueJS Todo´s List
-
-Repository created to learn about VueJS.
-
-Contain lessons and samples.
-
-Feel free to clone and use without restrictions.
-
-Author: [Feijó, Cícero](http://professorfeijo.com.br) :rocket:
+Adicionar e excluir tarefas;
+Mudar o status da tarefa (levando em conta se ela foi concluída ou não)
