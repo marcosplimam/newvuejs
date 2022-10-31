@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO´s with VueJS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&family=Roboto:wght@100&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+ <div class="container" id="app">
+  <header>
+    <h1>{{ name }}</h1>
+    <div class="avatar"></div>
+  </header>
+ 
+  <div class="panel">
+    <input v-model="task" type="text" placeholder="Digite uma tarefa">
+    <button v-on:click="addTask" class="add-task">+</button>
+  </div>
+
+  <h5 v-if="todos.length > 0">SUAS TAREFAS:</h5>
+  <h5 v-if="todos.length === 0">NÃO EXISTEM TAREFAS</h5>
+
+<div v-for="(todo, index) in todos">
+  <div class="task">
+    <div class="status pending" v-bind:class="todo.status" v-on:click="toggleStatus(index)"></div>
+    <div class="text">{{ todo.title }}</div>
+    <img src="img/garbage.png" alt="Excluir" class="delete" v-on:click ="toggleModal(index)">
+  </div>
+</div>
+
+<div class="modal-layer" v-if="showModal">
+  <div class="modal">
+  <h4>CONFIRMA A EXCLUSÃO?</h4>
+  <p>{{ selectedTask }}</p>
+    <div class="buttons">
+    <button v-on:click ="toggleModal">CANCELAR</button>
+    <button v-on:click ="removeTask">CONFIRMAR</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    task: '',
+    showModal: false, 
+    selectedItem: null,
+    selectedTask: '',
+    name: 'Marcos Paulo Lima',
+     todos: [
+      { title : 'Aprender ReactJS', status: 'done'},
+      { title : 'Aprender VUEJS', status: 'pending'},
+      { title : 'Aprender Docker', status: 'pending'},
+     ]
+  },
+  methods: {
+    addTask: function () {
+      if (this.task !== '') {
+        this.todos.push({
+        title: this.task,
+        status: 'pending'
+      })
+      this.task = '';
+      }
+    },
+    removeTask: function () {
+      this.todos.splice(this.selectedItem, 1);
+      this.showModal = false;
+    },
+    toggleModal: function (index) {
+      this.showModal = !this.showModal;
+
+      if (index !== undefined) {
+        this.selectedItem = index;
+        this.selectedTask = this.todos[index].title;
+      }
+    },
+    toggleStatus: function (index) {
+      this.todos[index].status = this.todos[index].status === 'pending' ? 'done' : 'pending';
+    }
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
